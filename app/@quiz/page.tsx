@@ -5,8 +5,18 @@ import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Player } from "@lottiefiles/react-lottie-player";
 
+type QuestionType = {
+  category: string;
+  type: string;
+  difficulty: string;
+  question: string;
+  correct_answer: string;
+  incorrect_answers: string[];
+  answers: string[];
+};
+
 function Quiz() {
-  const [questions, setQuestions] = useState<any>([]);
+  const [questions, setQuestions] = useState<QuestionType[]>([]);
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
   const config = useQuiz((state) => state.config);
@@ -23,8 +33,8 @@ function Quiz() {
         const data = await response.json();
 
         // console.log(results);
-        const shuffledResult: any = data.results.map(
-          (e: { incorrect_answers: any; correct_answer: any }) => {
+        const shuffledResult: QuestionType[] = data.results.map(
+          (e: { incorrect_answers: string[]; correct_answer: string }) => {
             const answers = [...e.incorrect_answers, e.correct_answer]
               .map((value) => ({ value, sort: Math.random() }))
               .sort((a, b) => a.sort - b.sort)
@@ -115,7 +125,7 @@ function Quiz() {
 
         <div className="flex justify-evenly items-center my-20 flex-wrap w-[90%] mt-10">
           {questions.length
-            ? questions[0].answers.map((ans: any) => (
+            ? questions[0].answers.map((ans) => (
                 <button
                   type="button"
                   key={ans}
