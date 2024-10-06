@@ -34,27 +34,27 @@ type QuizState = {
 const useQuiz = create<QuizState>((set) => ({
   config: { ...defaultConfig },
   addLevel: (level: string) =>
-    set((state: { config: any }) => ({
+    set((state) => ({
       config: { ...state.config, level: level },
     })),
   addCategory: (id: number, name: string) =>
-    set((state: { config: any }) => ({
+    set((state) => ({
       config: { ...state.config, category: { id: id, name: name } },
     })),
-  addNumberOfQuestion: (count: any) =>
-    set((state: { config: any }) => ({
+  addNumberOfQuestion: (count: number) =>
+    set((state) => ({
       config: { ...state.config, numberOfQuestion: count },
     })),
   addStatus: (status: string) =>
-    set((state: { config: any }) => ({
+    set((state) => ({
       config: { ...state.config, status: status },
     })),
   addType: (type: string) =>
-    set((state: { config: any }) => ({
+    set((state) => ({
       config: { ...state.config, type: type },
     })),
   addScore: () =>
-    set((state: { config: any }) => ({
+    set((state) => ({
       config: { ...state.config, score: state.config.score + 1 },
     })),
 }));

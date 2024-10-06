@@ -23,16 +23,18 @@ function Quiz() {
         const data = await response.json();
 
         // console.log(results);
-        let shuffledResult: any = data.results.map((e: any) => {
-          let answers = [...e.incorrect_answers, e.correct_answer]
-            .map((value) => ({ value, sort: Math.random() }))
-            .sort((a, b) => a.sort - b.sort)
-            .map(({ value }) => value);
-          return {
-            ...e,
-            answers: answers,
-          };
-        });
+        const shuffledResult: any = data.results.map(
+          (e: { incorrect_answers: any; correct_answer: any }) => {
+            const answers = [...e.incorrect_answers, e.correct_answer]
+              .map((value) => ({ value, sort: Math.random() }))
+              .sort((a, b) => a.sort - b.sort)
+              .map(({ value }) => value);
+            return {
+              ...e,
+              answers: answers,
+            };
+          }
+        );
         setQuestions([...shuffledResult]);
         setLoading(false);
         console.log("sfgg", shuffledResult);
@@ -45,7 +47,7 @@ function Quiz() {
   }, [config.numberOfQuestion, config.category.id, config.level, config.type]);
 
   const handleNext = () => {
-    let remaningQuestions = [...questions];
+    const remaningQuestions = [...questions];
     remaningQuestions.shift();
     setQuestions([...remaningQuestions]);
     setAnswer("");
